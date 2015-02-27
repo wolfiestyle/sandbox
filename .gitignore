@@ -1,0 +1,13 @@
+*~
+*.swp
+*.o
+*.so
+*.bak
+*.orig
+*.rej
+*.patch
+*.diff
+a.out
+gmon.out
+luac.out
+doc/
