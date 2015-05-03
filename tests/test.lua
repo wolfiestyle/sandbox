@@ -2,6 +2,12 @@
 package.path = "../src/?.lua;" .. package.path
 local sandbox = require "sandbox"
 
+local hacked
+
+string.hack = function()
+    hacked = true
+end
+
 local code = [[
 stuff = 42
 
@@ -39,6 +45,9 @@ function hack(fn)
     return g and g.secret or nil
 end
 
+local str = "123"
+str:hack()
+
 return stuff
 ]]
 
@@ -46,6 +55,7 @@ secret = "asdf1234"
 
 local env, ret = sandbox.eval(code)
 assert(env, ret)
+assert(not hacked, "String methods must not be exposed")
 
 assert(ret == env.stuff, "return value")
 assert(env.get_secret() ~= secret, "get_secret")
